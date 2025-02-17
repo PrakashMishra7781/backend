@@ -53,12 +53,12 @@ router.post("/", authenticateToken, async (req, res) => {
 router.put("/:id", authenticateToken, async (req, res) => {
   const { id } = req.params;
   const { title, description } = req.body;
-  const user_id = req.user.id; // ✅ Get user ID
+  const user_id = req.user.id;
 
   try {
     const result = await pool.query(
       "UPDATE items SET title = $1, description = $2 WHERE id = $3 AND user_id = $4 RETURNING *",
-      [title, description, id, user_id] // ✅ Added `user_id` condition
+      [title, description, id, user_id]
     );
 
     if (result.rows.length === 0) {
